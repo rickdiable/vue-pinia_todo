@@ -1,40 +1,30 @@
 <template>
   <div class="container">
+    <StatusNav></StatusNav>
+    <AddTodo></AddTodo>
+    <FilterTodo></FilterTodo>
     <TodoList></TodoList>
   </div>
 </template>
 
 <script>
 // import StatusNav from "@/components/StatusNav.vue";
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+// import { ref, onMounted } from 'vue';
+// import axios from 'axios';
+// import { mapState } from 'pinia';
 
 import TodoList from '@/components/TodoList.vue';
+import AddTodo from '@/components/AddTodo.vue';
+import StatusNav from '@/components/StatusNav.vue';
+import FilterTodo from '@/components/FilterTodo.vue';
 
 export default {
   name: 'VueTodo',
   components: {
     TodoList,
-  },
-
-  setup() {
-    const number = 123;
-
-    const data = ref(null);
-
-    onMounted(async () => {
-      try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=20');
-        data.value = response.data;
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-      }
-    });
-
-    return {
-      number,
-    };
+    AddTodo,
+    StatusNav,
+    FilterTodo,
   },
 };
 

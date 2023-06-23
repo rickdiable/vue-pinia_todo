@@ -12,37 +12,45 @@
     </div>
     <div class="todos">
       <div
-        v-for="todo in data"
+        @dblclick="onDblClick(todo)"
+        v-for="todo in todos"
         :key="todo.id"
         class="todo"
+        v-bind:class="{'is-complete':todo.completed}"
       >
         {{ todo.title }}
-        <i class="fas fa-trash-alt"></i>
+        <button type="button" class="btn btn-warning" @click="deleteTodo(todo.id)"> X </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+
+import todoStore from '@/stores/todos';
 
 export default {
   setup() {
-    const data = ref(null);
+    // store 實例
+    const todoList = todoStore();
+
+    // state (使用 storeToRefs 解構取值時資料保持響應性)
+    // ref 必須加上 .value 才能正確取到值
+    const { todos, apiUrl } = storeToRefs(todoList);
+
+    // action (方法通常不須響應性 直接從實例取出即可)
+    const { fetchTodos, onDblClick, deleteTodo } = todoList;
 
     onMounted(async () => {
-      try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=20');
-        data.value = response.data;
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-      }
+      await fetchTodos(apiUrl.value);
     });
 
     return {
-      data,
+      todos,
+      onDblClick,
+      deleteTodo,
     };
   },
 };
@@ -97,6 +105,26 @@ i {
 .is-complete {
   background: #35495e;
   color: #fff;
+}
+
+.btn {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 3px 7px;
+  border: none;
+  -webkit-border-radius: 2px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 2px;
+  -moz-background-clip: padding;
+  border-radius: 2px;
+  background-clip: padding-box;
+  transition: color 0.2s linear, background-color 0.2s linear;
+}
+
+.btn-warning {
+  background-color: rgb(167, 9, 9);
 }
 
 @media (max-width: 500px) {
