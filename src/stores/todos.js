@@ -10,7 +10,6 @@ export default defineStore('todosStore', {
     status: 'all',
     apiUrl: `${process.env.VUE_APP_API_URL}/todos`,
     // apiUrl: 'https://jsonplaceholder.typicode.com/todos',
-    updateStatusTodo: Boolean,
   }),
   getters: {
     getUserName: (state) => `我的名字叫做 ${state.apiUrl}`,
