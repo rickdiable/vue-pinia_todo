@@ -5,8 +5,8 @@
       <form @submit="onSubmit">
         <label for="typeTodo">
           <input id="typeTodo" type="text" v-model="title" placeholder="Add Todo...">
-          <input type="submit" value="Submit">
         </label>
+        <input type="submit" value="Submit">
       </form>
     </div>
   </div>
@@ -32,19 +32,22 @@ export default {
     return {
       title,
       onSubmit,
-      addTodo,
     };
   },
 };
 </script>
 
 <style scoped>
-form label {
+form {
   display: flex;
 }
 
-input[type="text"] {
+label:has(input[type="text"]) {
   flex: 10;
+}
+
+input[type="text"] {
+  width: 100%;
   padding: 10px;
   border: 1px solid #41b883;
   outline: 0;
