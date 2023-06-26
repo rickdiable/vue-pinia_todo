@@ -8,10 +8,6 @@
 </template>
 
 <script>
-// import StatusNav from "@/components/StatusNav.vue";
-// import { ref, onMounted } from 'vue';
-// import axios from 'axios';
-// import { mapState } from 'pinia';
 
 import TodoList from '@/components/TodoList.vue';
 import AddTodo from '@/components/AddTodo.vue';
